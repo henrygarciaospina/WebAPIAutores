@@ -24,7 +24,7 @@ namespace WebAPIAutores.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ComentarioDTO>>> Get(int libroId) 
+        public async Task<ActionResult<List<ComentarioDTO>>> Get(int libroId)
         {
             var existeLibro = await context.Libros.AnyAsync(libroBD => libroBD.Id == libroId);
 
@@ -37,6 +37,19 @@ namespace WebAPIAutores.Controllers
                 .Where(comentarioBD => comentarioBD.LibroId == libroId).ToListAsync();
 
             return mapper.Map<List<ComentarioDTO>>(comentarios);
+        }
+
+        [HttpGet("{id:int}", Name ="obtenerComentario")]
+        public async Task<ActionResult<ComentarioDTO>> GetbyId(int id) 
+        {
+            var comentario = await context.Comentarios.FirstOrDefaultAsync(comentarioBD => comentarioBD.Id == id);
+
+            if (comentario == null)
+            {
+                return NotFound($"Comentario de Id {id} no existe");
+            }
+
+            return mapper.Map<ComentarioDTO>(comentario);
         }
 
         [HttpPost]
@@ -53,7 +66,10 @@ namespace WebAPIAutores.Controllers
             comentario.LibroId = libroId;
             context.Add(comentario);
             await context.SaveChangesAsync();
-            return Ok("Comentario del libro creado correctamente");
+
+            var comentarioDTO = mapper.Map<ComentarioDTO>(comentario);
+            
+            return CreatedAtRoute("obtenerComentario", new { id = comentario.Id, libroId = libroId}, comentarioDTO );
         }
     }
 }
