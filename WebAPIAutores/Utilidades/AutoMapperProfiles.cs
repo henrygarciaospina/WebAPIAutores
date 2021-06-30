@@ -12,18 +12,27 @@ namespace WebAPIAutores.Utilidades
         {
             //DTOs de creación (POST)
             CreateMap<AutorCreacionDTO, Autor>();
+            
             CreateMap<LibroCreacionDTO, Libro>()
                 .ForMember(libro => libro.AutoresLibros, opciones => opciones.MapFrom(MapAutoresLibros));
+            
             CreateMap<ComentarioCreacionDTO, Comentario>();
 
             //DTOs de lectura (Get)
             CreateMap<Libro, LibroDTO>();
+            
             CreateMap<Libro, LibroDTOConAutores>()
                 .ForMember(LibroDTO => LibroDTO.Autores, opciones => opciones.MapFrom(MapLibroDTOAutores));
+            
             CreateMap<Autor, AutorDTO>();
+            
             CreateMap<Autor, AutorDTOConLibros>()
                 .ForMember(AutorDTO => AutorDTO.Libros, opciones => opciones.MapFrom(MapAutorDTOLibros));
+
             CreateMap<Comentario, ComentarioDTO>();
+
+            //DTOs de actualización
+              CreateMap<LibroPatchDTO, Libro>().ReverseMap();
         }
 
         private object MapAutorDTOLibros(Autor autor, AutorDTO autorDTO)

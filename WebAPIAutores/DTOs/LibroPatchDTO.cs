@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace WebAPIAutores.DTOs
 {
-    public class LibroCreacionDTO
+    public class LibroPatchDTO
     {
         [Required(ErrorMessage = "El campo {0} es requerido")]
         public string Titulo { get; set; }
         public DateTime FechaPublicacion { get; set; }
-        public List<int> AutoresIds { get; set; }
     }
 }

@@ -60,7 +60,6 @@ C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\obj\Debug\net5.0\WebAPIA
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\obj\Debug\net5.0\ref\WebAPIAutores.dll
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\obj\Debug\net5.0\WebAPIAutores.pdb
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\obj\Debug\net5.0\WebAPIAutores.genruntimeconfig.cache
-C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\obj\Debug\net5.0\WebAPIAutores.csproj.AssemblyReference.cache
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Henry\source\repos\WebAPIAutores\WebAPIAutores\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -82,7 +83,40 @@ namespace WebAPIAutores.Controllers
             return NoContent();
         }
 
-        private void AsignarOrdenAutores(Libro libro) 
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult> Patch(int id, JsonPatchDocument<LibroPatchDTO> patchDocument) 
+        {
+            if (patchDocument == null)
+            {
+                return BadRequest("Error em el envío de los datos");
+            }
+
+            var libroBD = await context.Libros.FirstOrDefaultAsync(l => l.Id == id);
+
+            if (libroBD == null)
+            {
+                return NotFound($"No existe el libro de id: {id}");
+            }
+
+            var libroDTO = mapper.Map<LibroPatchDTO>(libroBD);
+
+            patchDocument.ApplyTo(libroDTO, ModelState);
+
+            var esValido = TryValidateModel(libroDTO);
+
+
+            if (!esValido)
+            {
+                return BadRequest(ModelState);
+            }
+
+            mapper.Map(libroDTO, libroBD);
+
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        private static void AsignarOrdenAutores(Libro libro) 
         {
             if (libro.AutoresLibros != null)
             {
