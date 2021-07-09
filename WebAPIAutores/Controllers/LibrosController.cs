@@ -31,6 +31,11 @@ namespace WebAPIAutores.Controllers
                 .ThenInclude(autorLibroBD => autorLibroBD.Autor)
                 .FirstOrDefaultAsync(libroBD => libroBD.Id == id);
 
+            if (libro == null)
+            {
+                return NotFound($"El libro de Id: {id} no existe");
+            }
+
             libro.AutoresLibros = libro.AutoresLibros.OrderBy(al => al.Orden).ToList();
             return mapper.Map<LibroDTOConAutores>(libro);
         }
@@ -114,6 +119,23 @@ namespace WebAPIAutores.Controllers
 
             await context.SaveChangesAsync();
             return NoContent();
+        }
+
+        // /api/libros/1
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var existeLibro = await context.Libros.AnyAsync(l => l.Id == id);
+
+            if (!existeLibro)
+            {
+                return NotFound($"Libro de Id: {id} no existe");
+            }
+
+            context.Remove(new Libro() { Id = id });
+            await context.SaveChangesAsync();
+
+            return Ok($"Libro de Id: {id} eliminado exitosamente");
         }
 
         private static void AsignarOrdenAutores(Libro libro) 
